@@ -11,5 +11,6 @@ print(r'what\'s up')  # 字符串前加r（row string）
 
 
 
+print('what\'s up'.replace('wh', 'ho'))
 
 
