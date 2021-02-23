@@ -35,30 +35,21 @@ def get_today_date_from_sinajs(code_list):
     # day data
     content = get_content_from_internet(url)
     content = content.decode('gbk')
-    print(content)
 
     content = content.strip()
     data_line = content.split("\n")
     date_line = [i.replace('var hq_str_', '').split(',') for i in data_line]
     df = pd.DataFrame(date_line, dtype='float')
 
-    df[0] = df[0].str.split('="')
-    df['stock_code'] = df[0].str[0].str.strip()
-    df['stock_name'] = df[0].str[-1].str.strip()
-    df['candle_end_time'] = df[30] + ' ' + df[31]
+    # df[0] = df[0].str.split('="')
+    # df['stock_code'] = df[0].str[0].strip()
+    # df['stock_name'] = df[0].str[-1].strip()
 
-    rename_dict = {1: 'open', 2: 'pre_close', 3: 'close', 4: 'high', 5: 'low', 6: 'buy1', 7: 'sell1',
-                   8: 'amount', 9: 'volume', 32: 'status'}
-    df.rename(columns=rename_dict, inplace=True)
-    # print(df)
-    # df['status'] = df['status'].str.strip('";')
-
-    return df
+    return  df
 
 
-print(get_today_date_from_sinajs(['sh600285', 'sh600273']))
-exit()
-
+# get_today_date_from_sinajs(['sh600285', 'sh600273']);
+# exit()
 
 def is_today_trading_day():
     df = get_today_date_from_sinajs(code_list=['sh000001'])
@@ -86,7 +77,10 @@ def get_all_today_stock_data_from_sina_marketcenter():
         content = content.decode('gbk')
         page_num = page_num + 1
 
-        if '[]' in content:
+        if 'null' in content:
+            break
+
+        if page_num == 3:
             break
 
         content = re.sub(r'(?<={|,)([a-zA-Z][a-zA-Z0-9]*)(?=:)', r'"\1"', content)
@@ -94,34 +88,33 @@ def get_all_today_stock_data_from_sina_marketcenter():
         # 将数据装换成dict 格式
         content = json.loads(content)
         df = pd.DataFrame(content)
-        print(df)
+
         all_df = all_df.append(df, ignore_index=True)
+
         time.sleep(2)
-
-        # if page_num == 4:
-        #     break
-
     return all_df
-
 
 # symbol    code   name    trade  pricechange  changepercent      buy     sell settlement     open     high      low     volume      amount  ticktime      per      pb        mktcap           nmc  turnoverratio
 # print(get_all_today_stock_data_from_sina_marketcenter())
 # exit()
 
-
 ###################
-if is_today_trading_day() is False:
-    print('not trading day, exit')
-    exit()
-
+# if is_today_trading_day() is False:
+#     print('not trading day, exit')
+#     exit()
 
 if datetime.now().hour < 16:
     print('tody trading is not close')
     exit()
 
 df = get_all_today_stock_data_from_sina_marketcenter()
-df.to_csv('C:\\Users\\Administrator\\Desktop\\sdb\\all_stock\\all_' + str(datetime.now().date()).replace('-', '') + '.csv')
+print(df)
 
+# rename_dict = {'symbol': '','code': ,'name': ,'trade': ,'pricechange': ,
+# 'changepercent': ,'buy': ,'sell settlement': ,'open': ,'high': ,'low': ,'volume': ,
+# 'amount': ,'ticktime': ,'per': ,'pb': ,'mktcap': ,'nmc': ,'turnoverratio'}
+
+# trade 收盘价， settlement 前收盘价， volume 成交量， amount 成交额
 
 
 
@@ -129,9 +122,8 @@ df.to_csv('C:\\Users\\Administrator\\Desktop\\sdb\\all_stock\\all_' + str(dateti
 for i in df.index:
     t = df.iloc[i:i+1, :]
     stock_code = t.iloc[0]['symbol']
-    # print(stock_code)
-    path = 'C:\\Users\\Administrator\\Desktop\\sdb\\single\\' + stock_code + '.csv'
-    # path = 'C:\\Users\\Administrator\\Desktop\\all_stock.csv'
+    print(stock_code)
+    path = 'C:\\Users\\Administrator\\Desktop\\test\\' + stock_code + '.csv'
 
     if os.path.exists(path):
         t.to_csv(path, header=None, index=False, mode='a', encoding='gbk')

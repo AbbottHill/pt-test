@@ -1,8 +1,9 @@
 
 from urllib.request import urlopen
 import json
-from random import  randint
+from random import randint
 import pandas as pd
+
 pd.set_option('expand_frame_repr', False)
 pd.set_option('display.max_rows', 5000)
 
@@ -43,10 +44,11 @@ df = pd.DataFrame(k_data)
 
 rename_dict = {0: 'candle_end_time', 1: 'open', 2: 'close', 3: 'high', 4: 'low', 5: 'amount', 6: 'info', 7: '换', 8: '额'}
 df.rename(columns=rename_dict, inplace=True)
+df['code'] = s_code
 df['candle_end_time'] = pd.to_datetime(df['candle_end_time'])
 if 'info' not in df:
     df['info'] = None
-df = df[['candle_end_time', 'open', 'close', 'high', 'low', 'amount', 'info']]
+df = df[['candle_end_time', 'code', 'open', 'close', 'high', 'low', 'amount', 'info']]
 print(df)
 
 path = 'C:\\Users\\Administrator\\Desktop\\test\\' + s_code + '.csv'

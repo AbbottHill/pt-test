@@ -3,6 +3,9 @@ first python
 """
 # coding=utf-8
 from past.builtins import raw_input
+from datetime import datetime
+
+print(str(datetime.now().date()).replace('-', ''))
 
 print("hello world")
 print("你好！")

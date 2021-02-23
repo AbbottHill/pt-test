@@ -10,6 +10,7 @@ import json
 pd.set_option('expand_frame_repr', False)  # 当列显示太多
 pd.set_option('display.max_rows', 5000)  #
 
+
 def get_content_from_internet(url, max_try_num=10, sleep_time=5):
     get_success = False
     for i in range(max_try_num):
@@ -28,7 +29,6 @@ def get_content_from_internet(url, max_try_num=10, sleep_time=5):
 
 
 def get_today_date_from_sinajs(code_list):
-
     # http://hq.sinajs.cn/list=sh600285,sh600273
     url = "http://hq.sinajs.cn/list=" + ",".join(code_list)
 
@@ -114,23 +114,19 @@ if is_today_trading_day() is False:
     print('not trading day, exit')
     exit()
 
-
 if datetime.now().hour < 16:
     print('tody trading is not close')
     exit()
 
 df = get_all_today_stock_data_from_sina_marketcenter()
-df.to_csv('C:\\Users\\Administrator\\Desktop\\sdb\\all_stock\\all_' + str(datetime.now().date()).replace('-', '') + '.csv')
-
-
-
-
+df.to_csv(
+    'C:\\Users\\Administrator\\Desktop\\sdb_qq\\all_stock\\all_' + str(datetime.now().date()).replace('-', '') + '.csv')
 
 for i in df.index:
-    t = df.iloc[i:i+1, :]
+    t = df.iloc[i:i + 1, :]
     stock_code = t.iloc[0]['symbol']
     # print(stock_code)
-    path = 'C:\\Users\\Administrator\\Desktop\\sdb\\single\\' + stock_code + '.csv'
+    path = 'C:\\Users\\Administrator\\Desktop\\sdb_qq\\single\\' + stock_code + '.csv'
     # path = 'C:\\Users\\Administrator\\Desktop\\all_stock.csv'
 
     if os.path.exists(path):
@@ -138,4 +134,3 @@ for i in df.index:
     else:
         pd.DataFrame(columns=['data by cd']).to_csv(path, index=False, encoding='gbk')
         t.to_csv(path, header=None, index=False, mode='a', encoding='gbk')
-
