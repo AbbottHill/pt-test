@@ -5,3 +5,6 @@ df = pd.read_csv(filepath_or_buffer=r'D:\pyc-wk\pt-test\data\test.csv', encoding
 print(df)
 
 print(df['price'].quantile(0.01))
+
+df.to_csv('C:\\Users\\Administrator\\Desktop\\test-01.csv')
+

@@ -27,17 +27,24 @@ df = pd.read_csv(filepath_or_buffer=r'D:\pyc-wk\pt-test\data\sh600000.csv',
 # print(df.describe())
 
 
+df.loc['2021-02-24'] = ['sh600000', '浦发银行', 17, 17, 17, 17, 17, 32731881.0, 412197987.0]
+df.to_csv(path_or_buf=r'D:\pyc-wk\pt-test\data\sh600000.csv', encoding='gbk')
 
 # ========================================================== loc、iloc
 # print(df[['开盘价', '最高价']])
 
-# print(df.loc[['2016-01-06', '2017-12-25']])
-# print(df.loc['2016-01-06': '2017-12-25'])
+# print(df.loc[['2016-01-06', '2016-01-05', '2017-12-25']])
+# print(df.loc['2016-01-06': '2017-12-25']) # range
 # print(df.loc['2017-01-01': '2017-01-31', '开盘价': '前收盘价'])
+loc_ = df.loc['2020-12-22':, :]
+print(loc_)
+print(loc_['收盘价'].min())
+print(df['收盘价'].min())
+print(loc_)  # all row and column
 # print(df.loc[:, :])  # all row and column
 
 # print(df.iloc[0])
-# print(df.iloc[1, 3])
+print(df.iloc[1, 2])
 
 # ========================================================== operation
 # print(df['交易日期'] + ' 12:00')
@@ -66,11 +73,10 @@ df = pd.read_csv(filepath_or_buffer=r'D:\pyc-wk\pt-test\data\sh600000.csv',
 # df['涨跌'] = df['收盘价'].diff(1)
 # df['涨跌幅'] = df['收盘价'].pct_change(1)
 # print(df[['收盘价', '涨跌', '涨跌幅']])
-
 # df['累计成交量'] = df['成交量'].cumsum()  # 累加
 # print((df['涨跌幅'] + 1).cumprod())  # 累乘
 # print(df[['成交量', '累计成交量']])
 
-df['收盘价排名'] = df['收盘价'].rank(ascending=True, pct=True)  # 显示百分比
-print(df[['收盘价', '收盘价排名']])
+# df['收盘价排名'] = df['收盘价'].rank(ascending=True, pct=True)  # 显示百分比
+# print(df[['收盘价', '收盘价排名']])
 

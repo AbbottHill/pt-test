@@ -6,6 +6,7 @@ from past.builtins import raw_input
 from datetime import datetime
 
 print(str(datetime.now().date()).replace('-', ''))
+print(str(datetime.now().date()))
 
 print("hello world")
 print("你好！")

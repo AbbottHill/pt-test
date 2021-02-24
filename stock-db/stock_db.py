@@ -114,7 +114,7 @@ print(df)
 # 'changepercent': ,'buy': ,'sell settlement': ,'open': ,'high': ,'low': ,'volume': ,
 # 'amount': ,'ticktime': ,'per': ,'pb': ,'mktcap': ,'nmc': ,'turnoverratio'}
 
-# trade 收盘价， settlement 前收盘价， volume 成交量， amount 成交额
+# trade 收盘价， settlement 前收盘价， amount 成交额， volume 成交量
 
 
 
