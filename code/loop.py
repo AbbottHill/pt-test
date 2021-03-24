@@ -15,11 +15,11 @@ print(list(range(10 + 1)))
 #     sum_result += num
 # print(sum_result)
 
-# sum_result = 0
-# for num in range(2, 6):
-#     print(num)
-#     sum_result += num
-# print(sum_result)
+sum_result = 0
+for num in range(1, 10):
+    print(num, end=', ')
+    sum_result += num
+print(sum_result)
 
 """ ##########################################################################
 for
