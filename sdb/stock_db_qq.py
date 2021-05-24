@@ -170,8 +170,8 @@ for i in all_df.index:
     stock_code = t.iloc[0]['symbol']
     path = 'C:\\Users\\Administrator\\Desktop\\sdb_cd\\single\\' + stock_code + '.csv'
     if not os.path.exists(path):
-        print('his->', stock_code)
-        hdf = get_his_date_from_qq(s_code=stock_code, k_type='day', num=1560)
+        print(i, '->his->', stock_code)
+        hdf = get_his_date_from_qq(s_code=stock_code, k_type='day', num=200 * 20)
         hdf.to_csv(path, index=False)
         time.sleep(1)
     else:
@@ -184,26 +184,26 @@ for f, _, i in walk(r"C:\Users\Administrator\Desktop\sdb_cd\single"):
         dataframe_list.append(f + "\\" + j)
 
 ##### update
-# if datetime.now().hour < 16:
-#     print('tody trading is not close')
-#     exit()
+if datetime.now().hour < 16:
+    print('tody trading is not close')
+    exit()
 
 
-# for i in all_df.index:
-#     t = all_df.iloc[i:i + 1, :]
-#     stock_code = t.iloc[0]['symbol']
-#     path = 'C:\\Users\\Administrator\\Desktop\\sdb_cd\\single\\' + stock_code + '.csv'
-#     if os.path.exists(path):
-#         print('update->', stock_code)
-#         his_csv = pd.read_csv(filepath_or_buffer=path, index_col='candle_end_time')
-#         hdf = get_his_date_from_qq(s_code=stock_code, k_type='day', num=1)
-#         print(hdf.iloc[-1])
-#         hdf = hdf[['code', 'open', 'close', 'high', 'low', 'amount', 'volume', 'info']]
-#         his_csv.loc[str(datetime.now().date())] = hdf.iloc[-1]
-#         his_csv.to_csv(path, encoding='utf-8')
-#         time.sleep(1)
-#     else:
-#         continue
+for i in all_df.index:
+    t = all_df.iloc[i:i + 1, :]
+    stock_code = t.iloc[0]['symbol']
+    path = 'C:\\Users\\Administrator\\Desktop\\sdb_cd\\single\\' + stock_code + '.csv'
+    if os.path.exists(path):
+        print(i, '->update->', stock_code)
+        his_csv = pd.read_csv(filepath_or_buffer=path, index_col='candle_end_time')
+        hdf = get_his_date_from_qq(s_code=stock_code, k_type='day', num=1)
+        # print(hdf.iloc[-1])
+        hdf = hdf[['code', 'open', 'close', 'high', 'low', 'amount', 'volume', 'info']]
+        his_csv.loc[str(datetime.now().date())] = hdf.iloc[-1]
+        his_csv.to_csv(path, encoding='utf-8')
+        time.sleep(1)
+    else:
+        continue
 
 exit()
 
