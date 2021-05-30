@@ -1,6 +1,9 @@
 # 复制代码
 # coding=utf-8
 import datetime
+import time
+
+print(time.time()) #自1971年1月1日00:00:00 距离现在秒数
 
 now = datetime.datetime.now()
 print(now)

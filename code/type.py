@@ -1,4 +1,12 @@
 
+s = input("input sth: ")
+
+print(s, type(s))
+
+s = int(input("input sth: "))
+print(s, type(s))
+
+
 class A:
     pass
 

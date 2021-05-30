@@ -58,7 +58,7 @@ def get_his_date_from_qq(s_code, k_type='day', num=1560):
     rename_dict = {0: 'candle_end_time', 1: 'open', 2: 'close', 3: 'high', 4: 'low', 5: 'volume', 6: 'info', 7: '换', 8: 'amount'}
     df.rename(columns=rename_dict, inplace=True)
     df['code'] = s_code
-    df['candle_end_time'] = pd.to_datetime(df['candle_end_time'])
+    # df['candle_end_time'] = pd.to_datetime(df['candle_end_time'])
     if 'info' not in df:
         df['info'] = None
     df = df[['candle_end_time', 'code', 'open', 'close', 'high', 'low', 'amount', 'volume', 'info']]
@@ -150,11 +150,6 @@ def get_all_today_stock_data_from_sina_marketcenter():
 # exit()
 
 
-###################
-if is_today_trading_day() is False:
-    print('not trading day, exit')
-    exit()
-
 
 all_path = 'C:\\Users\\Administrator\\Desktop\\sdb_cd\\all_stock\\all_' + str(datetime.now().date()).replace('-', '') + '.csv'
 if not os.path.exists(all_path):
@@ -168,14 +163,23 @@ else:
 for i in all_df.index:
     t = all_df.iloc[i:i + 1, :]
     stock_code = t.iloc[0]['symbol']
+    stock_name = t.iloc[0]['name']
     path = 'C:\\Users\\Administrator\\Desktop\\sdb_cd\\single\\' + stock_code + '.csv'
     if not os.path.exists(path):
         print(i, '->his->', stock_code)
-        hdf = get_his_date_from_qq(s_code=stock_code, k_type='day', num=200 * 20)
+        hdf = get_his_date_from_qq(s_code=stock_code, k_type='day', num=210 * 20)
+        hdf['name'] = stock_name
+        hdf = hdf[['candle_end_time', 'code', 'name', 'open', 'close', 'high', 'low', 'amount', 'volume', 'info']]
         hdf.to_csv(path, index=False)
         time.sleep(1)
     else:
         continue
+
+
+###################
+if is_today_trading_day() is False:
+    print('not trading day, exit')
+    exit()
 
 
 dataframe_list=[]
@@ -188,19 +192,29 @@ if datetime.now().hour < 16:
     print('tody trading is not close')
     exit()
 
-
+# todo
 for i in all_df.index:
     t = all_df.iloc[i:i + 1, :]
     stock_code = t.iloc[0]['symbol']
+    stock_name = t.iloc[0]['name']
     path = 'C:\\Users\\Administrator\\Desktop\\sdb_cd\\single\\' + stock_code + '.csv'
     if os.path.exists(path):
-        print(i, '->update->', stock_code)
-        his_csv = pd.read_csv(filepath_or_buffer=path, index_col='candle_end_time')
-        hdf = get_his_date_from_qq(s_code=stock_code, k_type='day', num=1)
-        # print(hdf.iloc[-1])
-        hdf = hdf[['code', 'open', 'close', 'high', 'low', 'amount', 'volume', 'info']]
-        his_csv.loc[str(datetime.now().date())] = hdf.iloc[-1]
-        his_csv.to_csv(path, encoding='utf-8')
+        print(i, 'update->', stock_code)
+        his_csv = pd.read_csv(filepath_or_buffer=path, dtype='str')
+        # get new data
+        hdf = get_his_date_from_qq(s_code=stock_code, k_type='day', num=10)
+        hdf['name'] = stock_name
+        # merge his and new
+        his_csv = pd.merge(his_csv, hdf, on=['candle_end_time', 'code', 'name', 'open', 'close', 'high', 'low', 'amount', 'volume'], how="outer")
+        # his_csv['info'] = his_csv['info_x']
+        # his_csv = his_csv[['candle_end_time', 'code', 'name', 'open', 'close', 'high', 'low', 'amount', 'volume', 'info_x', 'info_y']]
+
+        # rename_dict = {'info_y': 'info'}
+        # his_csv.rename(columns=rename_dict, inplace=True)
+        # hdf.index = hdf['candle_end_time']
+        # his_csv.sort_index()
+        his_csv.sort_values(by=["candle_end_time"])
+        his_csv.to_csv(path, index=False, encoding='utf-8')
         time.sleep(1)
     else:
         continue

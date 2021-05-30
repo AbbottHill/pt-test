@@ -11,6 +11,8 @@ print(str(datetime.now().date()))
 print("hello world")
 print("你好！")
 
+print(1 / 2)
+
 print(3 ** 2)
 
 print(3 * "abc-")
@@ -45,7 +47,9 @@ paragraph = """这是一个段落。
 raw_input("按下 enter 键退出，其他任意键显示...\n")
 
 # mutiple row
-import sys; x = 'runoob'; sys.stdout.write(x + '\n')
+import sys
+x = 'runoob'
+sys.stdout.write(x + '\n')
 
 
 input("\n\n按下 enter 键后退出。")
