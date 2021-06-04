@@ -12,7 +12,7 @@ exit()
 # yield
 def frange(x, y, z):
     while x < y:
-        yield x
+        yield x  # 生成器
         x += z
 
 

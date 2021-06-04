@@ -11,6 +11,12 @@ else:
 import random
 import time
 
+# context with
+with open('file.txt') as f:
+    for line in f:
+        print(line)
+
+
 exceps = 0
 
 def buy():

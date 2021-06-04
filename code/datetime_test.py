@@ -3,10 +3,18 @@
 import datetime
 import time
 
+
+
+print(time.time()) #自1971年1月1日00:00:00 距离现在秒数
+time.sleep(1)
 print(time.time()) #自1971年1月1日00:00:00 距离现在秒数
 
 now = datetime.datetime.now()
-print(now)
+print('datetime.datetime.now()', now)
+offsetday = datetime.timedelta(days=10)
+now_offsetday = now + offsetday
+print(now_offsetday)
+print(now_offsetday.year)
 
 # 将日期转化为字符串 datetime => string
 print(now.strftime('%Y-%m-%d %H:%M:%S'))

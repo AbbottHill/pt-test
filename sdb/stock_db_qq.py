@@ -1,4 +1,9 @@
-
+"""
+ todo:
+  1 log
+  2 batch update
+  3 analysis
+"""
 from urllib.request import urlopen
 from datetime import datetime
 from random import randint
