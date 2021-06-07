@@ -15,8 +15,9 @@ def _random(n = 16):
 
 
 s_code = 'sz300102'
+s_code = 'sh600285'
 k_type = 'day'
-num = 1
+num = 10
 
 ## qfq
 # https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get?_var=kline_dayqfq&param=sh600285,day,,,320,qfq&r=0.6339201167665203
@@ -52,6 +53,6 @@ if 'info' not in df:
 df = df[['candle_end_time', 'code', 'open', 'close', 'high', 'low', 'amount', 'volume', 'info']]
 print(df)
 
-path = 'C:\\Users\\Administrator\\Desktop\\test\\' + s_code + '.csv'
-df.to_csv(path, header=None, index=False, mode='a', encoding='gbk')
+# path = 'C:\\Users\\Administrator\\Desktop\\' + s_code + '.csv'
+# df.to_csv(path, header=None, index=False, mode='a', encoding='gbk')
 
