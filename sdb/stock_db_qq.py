@@ -182,8 +182,8 @@ for i in all_df.index:
 
 
 ###################
-if is_today_trading_day() is False:
-    print('not trading day, exit')
+if is_today_trading_day() is True and datetime.now().hour < 16:
+    print('tody trading is not close')
     exit()
 
 
@@ -192,10 +192,6 @@ for f, _, i in walk(r"C:\Users\Administrator\Desktop\sdb_cd\single"):
     for j in i:
         dataframe_list.append(f + "\\" + j)
 
-##### update
-if datetime.now().hour < 16:
-    print('tody trading is not close')
-    exit()
 
 # todo
 for i in all_df.index:

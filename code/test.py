@@ -4,6 +4,16 @@ first python
 # coding=utf-8
 from past.builtins import raw_input
 from datetime import datetime
+import random
+
+a1 = [1, 2, 3]
+arr = []
+for x in range(10):
+    # global arr=[]
+    a_ = random.choice(a1)
+    arr.append(a_)
+print(arr)
+print(type(arr))
 
 print(str(datetime.now().date()).replace('-', ''))
 print(str(datetime.now().date()))
